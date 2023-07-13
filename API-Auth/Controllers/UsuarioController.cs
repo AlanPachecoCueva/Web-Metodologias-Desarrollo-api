@@ -179,7 +179,7 @@ namespace API_Auth.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CentroCostosInsert?codigocentrocostos=" + codigoCentroCostos + "&descripcioncentrocostos=" + descripcioncentrocostos;
-                    
+
 
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
@@ -193,34 +193,9 @@ namespace API_Auth.Controllers
             {
                 return ("error: " + error);
             }
-
-            
-            // try
-            // {
-            //     using (var httpClient = new HttpClient())
-            //     {
-            //         var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CentroCostosInsert?codigocentrocostos=" + codigoCentroCostos + "&descripcioncentrocostos=" + descripcioncentrocostos;
-
-
-            //         // Hacer una petición GET a la URL y esperar la respuesta
-            //         HttpResponseMessage response = await httpClient.GetAsync(url);
-
-            //         // Leer el contenido de la respuesta como una cadena de caracteres
-            //         string responseBody = await response.Content.ReadAsStringAsync();
-
-            //         // Mostrar el cuerpo de la respuesta en la consola
-            //         Console.WriteLine(responseBody);
-            //         return responseBody;
-            //     }
-            //     //return "Holi";
-            // }
-            // catch (Exception error)
-            // {
-            //     return ("erooor: " + error);
-            // }
         }
 
-         [HttpPost("CreateTrabajador")]
+        [HttpPost("CreateTrabajador")]
 
         //36
 
@@ -1188,7 +1163,33 @@ namespace API_Auth.Controllers
                 return ("erooor: " + error);
             }
         }
-    }
 
+        [HttpGet("CreateGestionCuentaContable")]
+
+        public async Task<string> CreateGestionCuentaContable(String Sucursal, String CodigoConceptoNomina, String CodigoCategoOcupacional, String CodigoOperacion, String CodigoCuenta, String CodigoTipoCuenta)
+        {
+
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaInsert?Sucursal=" + Sucursal + "&CodigoConceptoNomina=" + CodigoConceptoNomina + "&CodigoCategoOcupacional=" + CodigoCategoOcupacional + "&CodigoOperacion=" + CodigoOperacion + "&CodigoCuenta="+ CodigoCuenta + "&CodigoTipocuenta=" + CodigoTipoCuenta;
+                    Console.WriteLine("GCC url: "+ url);
+
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("GCC: "+ responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("error: " + error);
+            }
+        }
+    }
 
 }
