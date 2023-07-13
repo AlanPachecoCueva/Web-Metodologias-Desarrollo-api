@@ -173,30 +173,58 @@ namespace API_Auth.Controllers
         public async Task<string> CreateCentroDeCostos(String codigoCentroCostos, String descripcioncentrocostos)
         {
             Console.WriteLine("codigoCentroCostos: ", codigoCentroCostos, " | descripcioncentrocostos: ", descripcioncentrocostos);
+
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CentroCostosInsert?codigocentrocostos=" + codigoCentroCostos + "&descripcioncentrocostos=" + descripcioncentrocostos;
+                    
 
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
-                    // Hacer una petición GET a la URL y esperar la respuesta
-                    HttpResponseMessage response = await httpClient.GetAsync(url);
-
-                    // Leer el contenido de la respuesta como una cadena de caracteres
                     string responseBody = await response.Content.ReadAsStringAsync();
 
-                    // Mostrar el cuerpo de la respuesta en la consola
                     Console.WriteLine(responseBody);
                     return responseBody;
                 }
-                //return "Holi";
             }
             catch (Exception error)
             {
-                return ("erooor: " + error);
+                return ("error: " + error);
             }
+
+            
+            // try
+            // {
+            //     using (var httpClient = new HttpClient())
+            //     {
+            //         var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CentroCostosInsert?codigocentrocostos=" + codigoCentroCostos + "&descripcioncentrocostos=" + descripcioncentrocostos;
+
+
+            //         // Hacer una petición GET a la URL y esperar la respuesta
+            //         HttpResponseMessage response = await httpClient.GetAsync(url);
+
+            //         // Leer el contenido de la respuesta como una cadena de caracteres
+            //         string responseBody = await response.Content.ReadAsStringAsync();
+
+            //         // Mostrar el cuerpo de la respuesta en la consola
+            //         Console.WriteLine(responseBody);
+            //         return responseBody;
+            //     }
+            //     //return "Holi";
+            // }
+            // catch (Exception error)
+            // {
+            //     return ("erooor: " + error);
+            // }
         }
+
+         [HttpPost("CreateTrabajador")]
+
+        //36
+
+
 
         [HttpGet("SearchCentroDeCosto")]
 
@@ -988,14 +1016,14 @@ namespace API_Auth.Controllers
         public async Task<string> CreateTrabajador([FromBody] TrabajadorModel trabajador)
         {
 
-            
+
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     var baseUrl = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/TrabajadorInsert";
                     var queryParams = $"COMP_Codigo={trabajador.COMP_Codigo}&Tipo_trabajador={trabajador.Tipo_trabajador}&Apellido_Paterno={trabajador.Apellido_Paterno}&Apellido_Materno={trabajador.Apellido_Materno}&Nombres={trabajador.Nombres}&Identificacion={trabajador.Identificacion}&Entidad_Bancaria={trabajador.Entidad_Bancaria}&CarnetIESS={trabajador.CarnetIESS}&Direccion={trabajador.Direccion}&Telefono_Fijo={trabajador.Telefono_Fijo}&Telefono_Movil={trabajador.Telefono_Movil}&Genero={trabajador.Genero}&Nro_Cuenta_Bancaria={trabajador.Nro_Cuenta_Bancaria}&Codigo_Categoria_Ocupacion={trabajador.Codigo_Categoria_Ocupacion}&Ocupacion={trabajador.Ocupacion}&Centro_Costos={trabajador.Centro_Costos}&Nivel_Salarial={trabajador.Nivel_Salarial}&EstadoTrabajador={trabajador.EstadoTrabajador}&Tipo_Contrato={trabajador.Tipo_Contrato}&Tipo_Cese={trabajador.Tipo_Cese}&EstadoCivil={trabajador.EstadoCivil}&TipodeComision={trabajador.TipodeComision}&FechaNacimiento={trabajador.FechaNacimiento}&FechaIngreso={trabajador.FechaIngreso}&FechaCese={trabajador.FechaCese}&FechaReingreso={trabajador.FechaReingreso}&Fecha_Ult_Actualizacion={trabajador.Fecha_Ult_Actualizacion}&EsReingreso={trabajador.EsReingreso}&Tipo_Cuenta={trabajador.Tipo_Cuenta}&FormaCalculo13ro={trabajador.FormaCalculo13ro}&FormaCalculo14ro={trabajador.FormaCalculo14ro}&BoniComplementaria={trabajador.BoniComplementaria}&BoniEspecial={trabajador.BoniEspecial}&Remuneracion_Minima={trabajador.Remuneracion_Minima}&Fondo_Reserva={trabajador.Fondo_Reserva}";
-                    
+
                     var url = $"{baseUrl}?{queryParams}";
                     Console.WriteLine("agregar trabajardor url: {0}", url);
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
@@ -1013,129 +1041,153 @@ namespace API_Auth.Controllers
         }
 
 
-        //[HttpPost("CreateTrabajador")]
+        [HttpGet("Ocupaciones")]
 
-        ////36
-        //public async Task<string> CreateTrabajador([FromBody] TrabajadorModel trabajador)
-        //{
-        //    int COMP_Codigo = trabajador.COMP_Codigo;
-        //    string Tipo_trabajador = trabajador.Tipo_trabajador;
-        //    string Apellido_Paterno = trabajador.Apellido_Paterno;
-        //    string Apellido_Materno = trabajador.Apellido_Materno;
-        //    string Nombres = trabajador.Nombres;
-        //    string Identificacion = trabajador.Identificacion;
-        //    string Entidad_Bancaria = trabajador.Entidad_Bancaria;
-        //    string CarnetIESS = trabajador.CarnetIESS;
-        //    string Direccion = trabajador.Direccion;
-        //    string Telefono_Fijo = trabajador.Telefono_Fijo;
-        //    string Telefono_Movil = trabajador.Telefono_Movil;
-        //    string Genero = trabajador.Genero;
-        //    string Nro_Cuenta_Bancaria = trabajador.Nro_Cuenta_Bancaria;
-        //    string Codigo_Categoria_Ocupacion = trabajador.Codigo_Categoria_Ocupacion;
-        //    string Ocupacion = trabajador.Ocupacion;
-        //    int Centro_Costos = trabajador.Centro_Costos;
-        //    string Nivel_Salarial = trabajador.Nivel_Salarial;
-        //    string EstadoTrabajador = trabajador.EstadoTrabajador;
-        //    string Tipo_Contrato = trabajador.Tipo_Contrato;
-        //    string Tipo_Cese = trabajador.Tipo_Cese;
-        //    string EstadoCivil = trabajador.EstadoCivil;
-        //    string TipodeComision = trabajador.TipodeComision;
-        //    string FechaNacimiento = trabajador.FechaNacimiento;
-        //    string FechaIngreso = trabajador.FechaIngreso;
-        //    string FechaCese = trabajador.FechaCese;
-        //    string FechaReingreso = trabajador.FechaReingreso;
-        //    string Fecha_Ult_Actualizacion = trabajador.Fecha_Ult_Actualizacion;
-        //    string EsReingreso = trabajador.EsReingreso;
-        //    string Tipo_Cuenta = trabajador.Tipo_Cuenta;
-        //    int FormaCalculo13ro = trabajador.FormaCalculo13ro;
-        //    int FormaCalculo14ro = trabajador.FormaCalculo14ro;
-        //    int BoniComplementaria = trabajador.BoniComplementaria;
-        //    int BoniEspecial = trabajador.BoniEspecial;
-        //    int Remuneracion_Minima = trabajador.Remuneracion_Minima;
-        //    string Fondo_Reserva = trabajador.Fondo_Reserva;
-
-        //    Console.WriteLine("agregar trabajardor: ");
-        //    Console.WriteLine("agregar trabajardor FechaNacimiento: {0}", FechaNacimiento);
-        //    try
-        //    {
-        //        using (var httpClient = new HttpClient())
-        //        {
-        //            // Crear un objeto JSON vacío
-        //            JObject data = new JObject();
-
-        //            // Agregar propiedades al objeto JSON
-        //            data["FormaCalculo14ro"] = FormaCalculo14ro;
-        //            data["BoniComplementaria"] = BoniComplementaria;
-        //            data["BoniEspecial"] = BoniEspecial;
-        //            data["Remuneracion_Minima"] = Remuneracion_Minima;
-        //            data["Fondo_Reserva"] = Fondo_Reserva;
-
-        //            data["FechaReingreso"] = FechaReingreso;
-        //            data["Fecha_Ult_Actualizacion"] = Fecha_Ult_Actualizacion;
-        //            data["EsReingreso"] = EsReingreso;
-        //            data["Tipo_Cuenta"] = Tipo_Cuenta;
-        //            data["FormaCalculo13ro"] = FormaCalculo13ro;
-
-        //            data["EstadoCivil"] = EstadoCivil;
-        //            data["TipodeComision"] = TipodeComision;
-        //            data["FechaNacimiento"] = FechaNacimiento;
-        //            data["FechaIngreso"] = FechaIngreso;
-        //            data["FechaCese"] = FechaCese;
-
-        //            data["Nivel_Salarial"] = Nivel_Salarial;
-        //            data["EstadoTrabajador"] = EstadoTrabajador;
-        //            data["Codigo_Categoria_Ocupacion"] = Codigo_Categoria_Ocupacion;
-        //            data["Tipo_Contrato"] = Tipo_Contrato;
-        //            data["Tipo_Cese"] = Tipo_Cese;
+        public async Task<string> GetOcupaciones()
+        {
+            Console.WriteLine("GetOcupaciones()");
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/Ocupaciones";
 
 
-        //            data["Genero"] = Genero;
-        //            data["Nro_Cuenta_Bancaria"] = Nro_Cuenta_Bancaria;
-        //            data["Codigo_Categoria_Ocupacion"] = Codigo_Categoria_Ocupacion;
-        //            data["Ocupacion"] = Ocupacion;
-        //            data["Centro_Costos"] = Centro_Costos;
+                    // Hacer una petición GET a la URL y esperar la respuesta
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    // Leer el contenido de la respuesta como una cadena de caracteres
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // Mostrar el cuerpo de la respuesta en la consola
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
+
+        [HttpGet("CategoriaOcupacional")]
+
+        public async Task<string> GetCategoriaOcupacional()
+        {
+            Console.WriteLine("GetCategoriaOcupacional()");
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/CategoriaOcupacional";
 
 
-        //            data["COMP_Codigo"] = COMP_Codigo;
-        //            data["Tipo_trabajador"] = Tipo_trabajador;
-        //            data["Apellido_Paterno"] = Apellido_Paterno;
-        //            data["Apellido_Materno"] = Apellido_Materno;
-        //            data["Nombres"] = Nombres;
-        //            data["Identificacion"] = Identificacion;
-        //            data["Entidad_Bancaria"] = Entidad_Bancaria;
-        //            data["CarnetIESS"] = CarnetIESS;
-        //            data["Direccion"] = Direccion;
-        //            data["Telefono_Fijo"] = Telefono_Fijo;
-        //            data["Telefono_Movil"] = Telefono_Movil;
-        //            data["Mensaje"] = "M";
+                    // Hacer una petición GET a la URL y esperar la respuesta
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
 
-        //            Console.WriteLine("data agregar trabajardor: {0}", data.ToString());
+                    // Leer el contenido de la respuesta como una cadena de caracteres
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
-        //            var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/TrabajadorInsert";
+                    // Mostrar el cuerpo de la respuesta en la consola
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
+
+        [HttpGet("NivelSalarial")]
+
+        public async Task<string> GetNivelSalarial()
+        {
+            Console.WriteLine("GetNivelSalarial()");
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/NivelSalarial";
 
 
-        //            var jsonTrabajadorData = data.ToString();
+                    // Hacer una petición GET a la URL y esperar la respuesta
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
 
-        //            // Crea el contenido de la solicitud HTTP
-        //            var content = new StringContent(jsonTrabajadorData);
+                    // Leer el contenido de la respuesta como una cadena de caracteres
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
-        //            // Hacer una petición POST a la URL y esperar la respuesta
-        //            HttpResponseMessage response = await httpClient.PostAsync(url, content);
+                    // Mostrar el cuerpo de la respuesta en la consola
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
 
-        //            // Leer el contenido de la respuesta como una cadena de caracteres
-        //            string responseBody = await response.Content.ReadAsStringAsync();
+        [HttpGet("PlanDeCuentas")]
 
-        //            // Mostrar el cuerpo de la respuesta en la consola
-        //            Console.WriteLine(responseBody);
-        //            return responseBody;
-        //        }
-        //        //return "Holi";
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return ("erooor: " + error);
-        //    }
-        //}
+        public async Task<string> GetPlanDeCuentas()
+        {
+            Console.WriteLine("GetPlanDeCuentas()");
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/PlandeCuentas";
+
+
+                    // Hacer una petición GET a la URL y esperar la respuesta
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    // Leer el contenido de la respuesta como una cadena de caracteres
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // Mostrar el cuerpo de la respuesta en la consola
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
+
+
+        [HttpGet("GestionCuentaContable")]
+
+        public async Task<string> GetGestionCuentaContable(String sucursal)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/Gestion_Cuenta_Contable_Nomina_Select?Sucursal=" + sucursal;
+
+                    // Hacer una petición GET a la URL y esperar la respuesta
+                    HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    // Leer el contenido de la respuesta como una cadena de caracteres
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // Mostrar el cuerpo de la respuesta en la consola
+
+                    Console.WriteLine("GestionCuentasContables");
+                    Console.WriteLine(responseBody);
+                    return responseBody;
+                }
+                //return "Holi";
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
     }
 
 
