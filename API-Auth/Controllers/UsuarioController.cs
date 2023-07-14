@@ -370,37 +370,15 @@ namespace API_Auth.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     String url1 = "hola";
-                    //if(Traba_Aplica_iess.CompareTo("") == 0){
-                    //    //url1 = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/MovimientoPlanillaInsert?conceptos="+concepto+"&prioridad="+prioridad+"&tipooperacion="+tipoOperacion+"&cuenta1="+c1+"&cuenta2="+c2+"&cuenta3="+c3+"&cuenta4="+c4+"&MovimientoExcepcion1="+me1+"&MovimientoExcepcion2="+me2+"&MovimientoExcepcion3="+me3+"&Traba_Proyecto_imp_renta="+Traba_Proyecto_imp_renta+"&Aplica_Proy_Renta="+Aplica_Proy_Renta+"&Empresa_Afecta_Iess="+Empresa_Afecta_Iess;
-                    //    Traba_Aplica_iess = "";
-                    //}
 
-                    //if(Traba_Proyecto_imp_renta.CompareTo("-") == 0){
-                    //    //url1 = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/MovimientoPlanillaInsert?conceptos="+concepto+"&prioridad="+prioridad+"&tipooperacion="+tipoOperacion+"&cuenta1="+c1+"&cuenta2="+c2+"&cuenta3="+c3+"&cuenta4="+c4+"&MovimientoExcepcion1="+me1+"&MovimientoExcepcion2="+me2+"&MovimientoExcepcion3="+me3+"&Traba_Aplica_iess="+Traba_Aplica_iess+"&Aplica_Proy_Renta="+Aplica_Proy_Renta+"&Empresa_Afecta_Iess="+Empresa_Afecta_Iess;
-                    //    Traba_Proyecto_imp_renta = "";
-                    //}
-
-                    //if(Aplica_Proy_Renta.CompareTo("-") == 0){
-                    //    //url1 = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/MovimientoPlanillaInsert?conceptos="+concepto+"&prioridad="+prioridad+"&tipooperacion="+tipoOperacion+"&cuenta1="+c1+"&cuenta2="+c2+"&cuenta3="+c3+"&cuenta4="+c4+"&MovimientoExcepcion1="+me1+"&MovimientoExcepcion2="+me2+"&MovimientoExcepcion3="+me3+"&Traba_Aplica_iess="+Traba_Aplica_iess+"&Traba_Proyecto_imp_renta="+Traba_Proyecto_imp_renta+"&Empresa_Afecta_Iess="+Empresa_Afecta_Iess;
-                    //    Aplica_Proy_Renta = "";
-                    //}
-
-                    //if(Empresa_Afecta_Iess.CompareTo("-") == 0){
-                    //    //url1 = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/MovimientoPlanillaInsert?conceptos="+concepto+"&prioridad="+prioridad+"&tipooperacion="+tipoOperacion+"&cuenta1="+c1+"&cuenta2="+c2+"&cuenta3="+c3+"&cuenta4="+c4+"&MovimientoExcepcion1="+me1+"&MovimientoExcepcion2="+me2+"&MovimientoExcepcion3="+me3+"&Traba_Aplica_iess="+Traba_Aplica_iess+"&Traba_Proyecto_imp_renta="+Traba_Proyecto_imp_renta+"&Aplica_Proy_Renta="+Aplica_Proy_Renta;
-                    //    Empresa_Afecta_Iess = "";
-                    //}
                     url1 = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/MovimientoPlanillaInsert?conceptos=" + concepto + "&prioridad=" + prioridad + "&tipooperacion=" + tipoOperacion + "&cuenta1=" + c1 + "&cuenta2=" + c2 + "&cuenta3=" + c3 + "&cuenta4=" + c4 + "&MovimientoExcepcion1=" + me1 + "&MovimientoExcepcion2=" + me2 + "&MovimientoExcepcion3=" + me3 + "&Traba_Aplica_iess=" + Traba_Aplica_iess + "&Traba_Proyecto_imp_renta=" + Traba_Proyecto_imp_renta + "&Aplica_Proy_Renta=" + Aplica_Proy_Renta + "&Empresa_Afecta_Iess=" + Empresa_Afecta_Iess;
 
 
                     // Hacer una petición GET a la URL y esperar la respuesta
-                    Console.Write("URL: ", url1);
-                    HttpResponseMessage response = await httpClient.GetAsync(url1);
+                    HttpResponseMessage response = await httpClient.PostAsync(url1, null);
 
-                    // Leer el contenido de la respuesta como una cadena de caracteres
                     string responseBody = await response.Content.ReadAsStringAsync();
 
-                    // Mostrar el cuerpo de la respuesta en la consola
-                    Console.WriteLine("CreateMovimientoPlanilla result");
                     Console.WriteLine(responseBody);
                     return responseBody;
                 }
@@ -411,6 +389,7 @@ namespace API_Auth.Controllers
                 return ("erooor: " + error);
             }
         }
+
 
         [HttpGet("UpdateMovimientoPlanilla")]
 
@@ -1174,14 +1153,14 @@ namespace API_Auth.Controllers
                 using (var httpClient = new HttpClient())
                 {
 
-                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaInsert?Sucursal=" + Sucursal + "&CodigoConceptoNomina=" + CodigoConceptoNomina + "&CodigoCategoOcupacional=" + CodigoCategoOcupacional + "&CodigoOperacion=" + CodigoOperacion + "&CodigoCuenta="+ CodigoCuenta + "&CodigoTipocuenta=" + CodigoTipoCuenta;
-                    Console.WriteLine("GCC url: "+ url);
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaInsert?Sucursal=" + Sucursal + "&CodigoConceptoNomina=" + CodigoConceptoNomina + "&CodigoCategoOcupacional=" + CodigoCategoOcupacional + "&CodigoOperacion=" + CodigoOperacion + "&CodigoCuenta=" + CodigoCuenta + "&CodigoTipocuenta=" + CodigoTipoCuenta;
+                    Console.WriteLine("GCC url: " + url);
 
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
                     string responseBody = await response.Content.ReadAsStringAsync();
 
-                    Console.WriteLine("GCC: "+ responseBody);
+                    Console.WriteLine("GCC: " + responseBody);
                     return responseBody;
                 }
             }
