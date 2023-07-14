@@ -195,8 +195,6 @@ namespace API_Auth.Controllers
             }
         }
 
-        [HttpPost("CreateTrabajador")]
-
         //36
 
 
@@ -940,8 +938,8 @@ namespace API_Auth.Controllers
             public string Telefono_Movil { get; set; }
             public string Genero { get; set; }
             public string Nro_Cuenta_Bancaria { get; set; }
-            public string Codigo_Categoria_Ocupacion { get; set; }
-            public string Ocupacion { get; set; }
+            public int Codigo_Categoria_Ocupacion { get; set; }
+            public int Ocupacion { get; set; }
             public int Centro_Costos { get; set; }
             public string Nivel_Salarial { get; set; }
             public string EstadoTrabajador { get; set; }
@@ -979,7 +977,7 @@ namespace API_Auth.Controllers
                     var queryParams = $"COMP_Codigo={trabajador.COMP_Codigo}&Tipo_trabajador={trabajador.Tipo_trabajador}&Apellido_Paterno={trabajador.Apellido_Paterno}&Apellido_Materno={trabajador.Apellido_Materno}&Nombres={trabajador.Nombres}&Identificacion={trabajador.Identificacion}&Entidad_Bancaria={trabajador.Entidad_Bancaria}&CarnetIESS={trabajador.CarnetIESS}&Direccion={trabajador.Direccion}&Telefono_Fijo={trabajador.Telefono_Fijo}&Telefono_Movil={trabajador.Telefono_Movil}&Genero={trabajador.Genero}&Nro_Cuenta_Bancaria={trabajador.Nro_Cuenta_Bancaria}&Codigo_Categoria_Ocupacion={trabajador.Codigo_Categoria_Ocupacion}&Ocupacion={trabajador.Ocupacion}&Centro_Costos={trabajador.Centro_Costos}&Nivel_Salarial={trabajador.Nivel_Salarial}&EstadoTrabajador={trabajador.EstadoTrabajador}&Tipo_Contrato={trabajador.Tipo_Contrato}&Tipo_Cese={trabajador.Tipo_Cese}&EstadoCivil={trabajador.EstadoCivil}&TipodeComision={trabajador.TipodeComision}&FechaNacimiento={trabajador.FechaNacimiento}&FechaIngreso={trabajador.FechaIngreso}&FechaCese={trabajador.FechaCese}&FechaReingreso={trabajador.FechaReingreso}&Fecha_Ult_Actualizacion={trabajador.Fecha_Ult_Actualizacion}&EsReingreso={trabajador.EsReingreso}&Tipo_Cuenta={trabajador.Tipo_Cuenta}&FormaCalculo13ro={trabajador.FormaCalculo13ro}&FormaCalculo14ro={trabajador.FormaCalculo14ro}&BoniComplementaria={trabajador.BoniComplementaria}&BoniEspecial={trabajador.BoniEspecial}&Remuneracion_Minima={trabajador.Remuneracion_Minima}&Fondo_Reserva={trabajador.Fondo_Reserva}";
 
                     var url = $"{baseUrl}?{queryParams}";
-                    Console.WriteLine("agregar trabajardor url: {0}", url);
+                    Console.WriteLine("agregar trabajardor url: {0}"+ url);
                     HttpResponseMessage response = await httpClient.PostAsync(url, null);
 
                     string responseBody = await response.Content.ReadAsStringAsync();
@@ -1170,23 +1168,67 @@ namespace API_Auth.Controllers
             }
         }
 
-         [HttpGet("DeleteGestionCuentaContable")]
+        [HttpGet("DeleteGestionCuentaContable")]
         public async Task<string> DeleteGestionCuentaContable(String Sucursal, String CodigoConceptoNomina, String CodigoCategoOcupacional, String CodigoOperacion, String CodigoCuenta, String CodigoTipoCuenta)
-        { 
-            Console.WriteLine("Sucursal: "+ Sucursal+ " | CodigoConceptoNomina: "+ CodigoConceptoNomina+" | CodigoCategoOcupacional: "+CodigoCategoOcupacional +" | CodigoOperacion: "+ CodigoOperacion+ " | CodigoCuenta: "+ CodigoCuenta+ " | CodigoTipoCuenta: "+ CodigoTipoCuenta);
+        {
+            Console.WriteLine("Sucursal: " + Sucursal + " | CodigoConceptoNomina: " + CodigoConceptoNomina + " | CodigoCategoOcupacional: " + CodigoCategoOcupacional + " | CodigoOperacion: " + CodigoOperacion + " | CodigoCuenta: " + CodigoCuenta + " | CodigoTipoCuenta: " + CodigoTipoCuenta);
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaDelete" +  $"?Sucursal={Sucursal}&CodigoConceptoNomina={CodigoConceptoNomina}&CodigoCategoOcupacional={CodigoCategoOcupacional}&CodigoOperacion={CodigoOperacion}&CodigoCuenta={CodigoCuenta}&CodigoTipocuenta={CodigoTipoCuenta}";
-                    
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaDelete" + $"?Sucursal={Sucursal}&CodigoConceptoNomina={CodigoConceptoNomina}&CodigoCategoOcupacional={CodigoCategoOcupacional}&CodigoOperacion={CodigoOperacion}&CodigoCuenta={CodigoCuenta}&CodigoTipocuenta={CodigoTipoCuenta}";
+
 
                     // Agrega los encabezados necesarios si la API los requiere
                     // httpClient.DefaultRequestHeaders.Add("NombreEncabezado", "ValorEncabezado");
 
                     // Configura la autenticación si es necesario
                     // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TipoAutenticacion", "Token");
-                    Console.WriteLine("URL DELETE: "+ url);
+                    Console.WriteLine("URL DELETE: " + url);
+                    // // Hacer una petición GET a la URL y esperar la respuesta
+                    // HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    // // Leer el contenido de la respuesta como una cadena de caracteres
+                    // string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // // Mostrar el cuerpo de la respuesta en la consola
+                    // Console.WriteLine(responseBody);
+                    // return responseBody;
+
+
+                    //------
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("GCC: " + responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
+
+        [HttpGet("EditGestionCuentaContable")]
+        public async Task<string> EditGestionCuentaContable(String Sucursal, String CodigoConceptoNomina, String CodigoCategoOcupacional, String CodigoOperacion, String CodigoCuenta, String CodigoTipoCuenta)
+        {
+            Console.WriteLine("Sucursal: " + Sucursal + " | CodigoConceptoNomina: " + CodigoConceptoNomina + " | CodigoCategoOcupacional: " + CodigoCategoOcupacional + " | CodigoOperacion: " + CodigoOperacion + " | CodigoCuenta: " + CodigoCuenta + " | CodigoTipoCuenta: " + CodigoTipoCuenta);
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+        
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaSearch" + $"?Sucursal={Sucursal}&CodigoConceptoNomina={CodigoConceptoNomina}&CodigoCategoOcupacional={CodigoCategoOcupacional}&CodigoOperacion={CodigoOperacion}&CodigoCuenta={CodigoCuenta}&CodigoTipocuenta={CodigoTipoCuenta}";
+
+
+                    // Agrega los encabezados necesarios si la API los requiere
+                    // httpClient.DefaultRequestHeaders.Add("NombreEncabezado", "ValorEncabezado");
+
+                    // Configura la autenticación si es necesario
+                    // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TipoAutenticacion", "Token");
+                    Console.WriteLine("URL EditGestionCuentaContable: " + url);
                     // // Hacer una petición GET a la URL y esperar la respuesta
                     // HttpResponseMessage response = await httpClient.GetAsync(url);
 
