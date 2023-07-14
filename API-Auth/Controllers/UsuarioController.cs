@@ -1169,6 +1169,49 @@ namespace API_Auth.Controllers
                 return ("error: " + error);
             }
         }
+
+         [HttpGet("DeleteGestionCuentaContable")]
+        public async Task<string> DeleteGestionCuentaContable(String Sucursal, String CodigoConceptoNomina, String CodigoCategoOcupacional, String CodigoOperacion, String CodigoCuenta, String CodigoTipoCuenta)
+        { 
+            Console.WriteLine("Sucursal: "+ Sucursal+ " | CodigoConceptoNomina: "+ CodigoConceptoNomina+" | CodigoCategoOcupacional: "+CodigoCategoOcupacional +" | CodigoOperacion: "+ CodigoOperacion+ " | CodigoCuenta: "+ CodigoCuenta+ " | CodigoTipoCuenta: "+ CodigoTipoCuenta);
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var url = "http://apiservicios.ecuasolmovsa.com:3009/api/Varios/GestionContableNominaDelete" +  $"?Sucursal={Sucursal}&CodigoConceptoNomina={CodigoConceptoNomina}&CodigoCategoOcupacional={CodigoCategoOcupacional}&CodigoOperacion={CodigoOperacion}&CodigoCuenta={CodigoCuenta}&CodigoTipocuenta={CodigoTipoCuenta}";
+                    
+
+                    // Agrega los encabezados necesarios si la API los requiere
+                    // httpClient.DefaultRequestHeaders.Add("NombreEncabezado", "ValorEncabezado");
+
+                    // Configura la autenticación si es necesario
+                    // httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TipoAutenticacion", "Token");
+                    Console.WriteLine("URL DELETE: "+ url);
+                    // // Hacer una petición GET a la URL y esperar la respuesta
+                    // HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                    // // Leer el contenido de la respuesta como una cadena de caracteres
+                    // string responseBody = await response.Content.ReadAsStringAsync();
+
+                    // // Mostrar el cuerpo de la respuesta en la consola
+                    // Console.WriteLine(responseBody);
+                    // return responseBody;
+
+
+                    //------
+                    HttpResponseMessage response = await httpClient.PostAsync(url, null);
+
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    Console.WriteLine("GCC: " + responseBody);
+                    return responseBody;
+                }
+            }
+            catch (Exception error)
+            {
+                return ("erooor: " + error);
+            }
+        }
     }
 
 }
